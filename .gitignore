@@ -1,0 +1,4 @@
+#This could get large and is unnessary
+log.txt
+#Ignore pulled files:
+github-repo*/
