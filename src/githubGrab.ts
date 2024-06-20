@@ -12,6 +12,7 @@ interface GitHubContent {
 }
 
 export async function downloadRepositoryContents(owner: string, repo: string, destination: string): Promise<void> {
+    log("Started download")
     await downloadDirectory(owner, repo, '', destination);
     log('Download complete');
 }

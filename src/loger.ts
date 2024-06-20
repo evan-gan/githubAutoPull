@@ -1,5 +1,5 @@
 import fs from 'fs-extra';
-// import path from 'path';
+import path from 'path';
 //Date utilitys
 import { format } from 'date-fns';
 import { enUS } from 'date-fns/locale';
@@ -21,22 +21,23 @@ function currentDate(): string {
     return formattedDate
 }
 
+export async function logWarn(message: string) {
+    const logMessage = 'WARN | ' + currentDate() + ' | ' + message
+    writeLogToFile(logMessage)
+}
+
 export async function logError(message: string, errorJSON: any) {
     const logMessage = 'ERROR | ' + currentDate() + ' | ' + message + '\n' + JSON.stringify(errorJSON)
-    const logFilePath = scriptDirectory + '../log.txt'
-
-    try {
-        await fs.appendFile(logFilePath, '\n' + logMessage);
-        console.log(logMessage);
-    } catch (err) {
-        console.error('Failed to write error to log file:', err);
-    }
+    writeLogToFile(logMessage)
 }
 
 export async function log(message: string) {
     const logMessage = 'GOOD  | ' + currentDate() + ' | ' + message
-    const logFilePath = scriptDirectory + '/../log.txt'
+    writeLogToFile(logMessage)
+}
 
+async function writeLogToFile(logMessage) {
+    const logFilePath = path.join(__dirname, '../log.txt')
     try {
         await fs.appendFile(logFilePath, '\n' + logMessage);
         console.log(logMessage);
@@ -44,4 +45,3 @@ export async function log(message: string) {
         console.error('Failed to write to log file:', err);
     }
 }
-
