@@ -36,7 +36,7 @@ export async function log(message: string) {
     writeLogToFile(logMessage)
 }
 
-async function writeLogToFile(logMessage) {
+async function writeLogToFile(logMessage: string) {
     const logFilePath = path.join(__dirname, '../log.txt')
     try {
         await fs.appendFile(logFilePath, '\n' + logMessage);
