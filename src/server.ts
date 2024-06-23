@@ -16,7 +16,8 @@ app.use(express.json());
 app.post('/webhook', (req, res) => {
     // Placeholder for GitHub webhook stuff
     log('Received webhook:\n' + req.body);
-    res.sendStatus(200);
+    // res.sendStatus(200);
+    res.status(200).send("Trigger sucsessfull!")
 });
 
 app.get('*', (request, response) => {
