@@ -5,7 +5,7 @@ import { log, logError, logWarn } from './loger'
 
 const app = express();
 const port = 25565;
-let publicDirectory = path.join(__dirname, 'public');
+let publicDirectory = path.join(__dirname, '../public');
 
 const serveDirectory = (dir: string) => {
     publicDirectory = path.join(__dirname, dir);
