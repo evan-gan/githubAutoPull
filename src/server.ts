@@ -40,7 +40,4 @@ app.get('*', (request, response) => {
 
 app.listen(port, () => {
     console.log(`Server is listening on port ${port}`);
-    serveDirectory(publicDirectory);
 });
-
-export { serveDirectory };
