@@ -4,7 +4,7 @@ import fs from 'fs';
 import { log, logError, logWarn } from './loger'
 
 const app = express();
-const port = 3000;
+const port = 25565;
 let publicDirectory = path.join(__dirname, 'public');
 
 const serveDirectory = (dir: string) => {
