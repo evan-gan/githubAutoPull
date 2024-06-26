@@ -1,20 +1,20 @@
-import fs from 'fs-extra';
-import path from 'path';
+import fs from 'fs-extra'
+import path from 'path'
 //Date utilitys
-import { format } from 'date-fns';
-import { enUS } from 'date-fns/locale';
+import { format } from 'date-fns'
+import { enUS } from 'date-fns/locale'
 
-const scriptDirectory = __dirname;
+const scriptDirectory = __dirname
 
 function currentDate(): string { 
     //Get current date and time
-    const now = new Date();
+    const now = new Date()
 
     //Apply custom format
-    const customFormat = `M/d/yyyy ' - ' h:mm:ss a 'EST'`;
+    const customFormat = `M/d/yyyy ' - ' h:mm:ss a 'EST'`
 
     //Format the current date and time
-    const formattedDate = format(now, customFormat, { locale: enUS });
+    const formattedDate = format(now, customFormat, { locale: enUS })
 
     // console.log("Got date: " + formattedDate)
 
@@ -39,9 +39,9 @@ export async function log(message: string) {
 async function writeLogToFile(logMessage: string) {
     const logFilePath = path.join(__dirname, '../log.txt')
     try {
-        await fs.appendFile(logFilePath, '\n' + logMessage);
-        console.log(logMessage);
+        await fs.appendFile(logFilePath, '\n' + logMessage)
+        console.log(logMessage)
     } catch (err) {
-        console.error('Failed to write to log file:', err);
+        console.error('Failed to write to log file:', err)
     }
 }
