@@ -14,6 +14,16 @@ const port = 25565
 const countFilePath = 'count.txt';
 let count = parseInt(await fs.readFile(countFilePath, 'utf-8'), 10)
 
+async function initialize() {
+    try {
+        count = parseInt(await fs.readFile(countFilePath, 'utf-8'), 10);
+    } catch (error) {
+        logError(`Failed to read count file:`, error.message);
+    }
+}
+
+initialize();
+
 let baseDirectory = path.join(__dirname, '..')
 let publicDirectory = path.join(baseDirectory, `public${count}`)
 
@@ -54,8 +64,11 @@ app.listen(port, () => {
 async function liveUpdate() {
     log("Stating a live update!")
     await incrementCounter()
+    let newPublicDirectory = path.join(baseDirectory, `public${count}`)
     //@ts-ignore - Yeah, it's hacky!
-    downloadRepositoryContents(process.env.REPO_OWNER, process.env.REPO_NAME ?? "", path.join(baseDirectory, `public${count}`))
+    await downloadRepositoryContents(process.env.REPO_OWNER, process.env.REPO_NAME ?? "", newPublicDirectory)
+    
+    publicDirectory = newPublicDirectory
     log("Live update done!")
 }
 
