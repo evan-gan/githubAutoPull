@@ -18,7 +18,7 @@ async function initialize() {
     try {
         count = parseInt(await fs.readFile(countFilePath, 'utf-8'), 10)
     } catch (error) {
-        logError(`Failed to read count file:`, error.message)
+        logError(`Failed to read count file:`, (error as Error).message)
     }
 }
 
