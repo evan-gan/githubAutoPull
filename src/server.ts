@@ -7,6 +7,8 @@ import { downloadRepositoryContents } from './githubGrab'
 import dotenv from "dotenv";
 dotenv.config();
 
+const REPO_OWNER = String(process.env.REPO_OWNER)
+const REPO_NAME = String(process.env.REPO_NAME)
 const app = express()
 const port = 25565
 
@@ -65,8 +67,8 @@ async function liveUpdate() {
     log("Stating a live update!")
     await incrementCounter()
     let newPublicDirectory = path.join(baseDirectory, `public${count}`)
-    //@ts-ignore - Yeah, it's hacky!
-    await downloadRepositoryContents(process.env.REPO_OWNER, process.env.REPO_NAME ?? "", newPublicDirectory)
+    //Test
+    await downloadRepositoryContents(REPO_OWNER, REPO_NAME, newPublicDirectory)
     
     publicDirectory = newPublicDirectory
     log("Live update done!")
