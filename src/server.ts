@@ -7,8 +7,8 @@ import { downloadRepositoryContents } from './githubGrab'
 import dotenv from "dotenv";
 dotenv.config();
 
-const REPO_OWNER = String(process.env.REPO_OWNER)
-const REPO_NAME = String(process.env.REPO_NAME)
+const REPO_OWNER = 'evan-gan'
+const REPO_NAME = 'evan-gan.github.io'
 const app = express()
 const port = 25565
 
