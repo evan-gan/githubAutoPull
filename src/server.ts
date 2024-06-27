@@ -12,7 +12,7 @@ const port = 25565
 
 //
 const countFilePath = path.join(__dirname, 'count.txt')
-let count = parseInt(await fs.readFile(countFilePath, 'utf-8'), 10)
+let count = 0
 
 async function initialize() {
     try {
