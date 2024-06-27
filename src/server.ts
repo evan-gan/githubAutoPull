@@ -11,14 +11,14 @@ const app = express()
 const port = 25565
 
 //
-const countFilePath = 'count.txt';
+const countFilePath = path.join(__dirname, 'count.txt')
 let count = parseInt(await fs.readFile(countFilePath, 'utf-8'), 10)
 
 async function initialize() {
     try {
-        count = parseInt(await fs.readFile(countFilePath, 'utf-8'), 10);
+        count = parseInt(await fs.readFile(countFilePath, 'utf-8'), 10)
     } catch (error) {
-        logError(`Failed to read count file:`, error.message);
+        logError(`Failed to read count file:`, error.message)
     }
 }
 
@@ -75,8 +75,8 @@ async function liveUpdate() {
 // import { promises as fs } from 'fs';
 
 async function incrementCounter() {
-    const number = await parseInt(await fs.readFile(countFilePath, 'utf-8'), 10);
-    await fs.writeFile(countFilePath, (number + 1).toString());
+    const number = await parseInt(await fs.readFile(countFilePath, 'utf-8'), 10)
+    await fs.writeFile(countFilePath, (number + 1).toString())
     count += 1
     log("Updated pull count")
 }
