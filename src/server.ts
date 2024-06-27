@@ -1,16 +1,21 @@
 import express from 'express'
 import path from 'path'
-import fs from 'fs'
+// import fs from 'fs'
+import fs from 'fs-extra'
 import { log, logError, logWarn } from './loger'
+import { downloadRepositoryContents } from './githubGrab'
+import dotenv from "dotenv";
+dotenv.config();
 
 const app = express()
 const port = 25565
-let baseDirectory = path.join(__dirname, '..')
-let publicDirectory = path.join(baseDirectory, "public")
 
-// const serveDirectory = (dir: string) => {
-//     publicDirectory = path.join(__dirname, dir)
-// }
+//
+const countFilePath = 'count.txt';
+let count = parseInt(await fs.readFile(countFilePath, 'utf-8'), 10)
+
+let baseDirectory = path.join(__dirname, '..')
+let publicDirectory = path.join(baseDirectory, `public${count}`)
 
 app.use(express.json())
 
@@ -19,6 +24,7 @@ app.post('/webhook', (req, res) => {
     log('Received webhook:\n' + JSON.stringify(req.body))
     // res.sendStatus(200)
     res.status(200).send("Receved trigger!")
+    liveUpdate()
 })
 
 app.get('*', (request, response) => {
@@ -45,6 +51,19 @@ app.listen(port, () => {
 })
 
 //TODO: Finish
-// function liveUpdate() { 
-    
-// }
+async function liveUpdate() {
+    log("Stating a live update!")
+    await incrementCounter()
+    //@ts-ignore - Yeah, it's hacky!
+    downloadRepositoryContents(process.env.REPO_OWNER, process.env.REPO_NAME ?? "", path.join(baseDirectory, `public${count}`))
+    log("Live update done!")
+}
+
+// import { promises as fs } from 'fs';
+
+async function incrementCounter() {
+    const number = await parseInt(await fs.readFile(countFilePath, 'utf-8'), 10);
+    await fs.writeFile(countFilePath, (number + 1).toString());
+    count += 1
+    log("Updated pull count")
+}
