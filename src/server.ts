@@ -14,9 +14,8 @@ const port = 25565
 
 //Rate limits! 
 const limiter = rateLimit({
-    windowMs: 15 * 60 * 1000, // 15 minutes
-    limit: 3, // limit each IP to 100 requests per windowMs
-    message: 'Too many requests from this IP, please try again later.',
+    windowMs: 60 * 1000,
+    limit: 60, //Limit per windowMs
     handler: (req, res) => {
         logWarn(`Rate limit exceeded for IP ${req.ip}`);
         res.status(429).send('Too many requests from this IP, please try again later.');
@@ -24,7 +23,16 @@ const limiter = rateLimit({
 });
 
 app.use(limiter);
-//
+
+const updateLimiter = rateLimit({
+    windowMs: 60 * 1000,
+    limit: 1, //Limit per windowMs
+    handler: (req, res) => {
+        logWarn(`Update rate limit exceeded for IP ${req.ip}`);
+        res.status(429).send('Too many requests from this IP, please try again later.');
+    }
+});
+
 const countFilePath = path.join(__dirname, 'count.txt')
 let count = 0
 
@@ -53,7 +61,7 @@ let publicDirectory = path.join(baseDirectory, `public_dir${count}`)
 
 app.use(express.json())
 
-app.post('/webhook', (req, res) => {
+app.post('/webhook', updateLimiter, (req, res) => {
     // Placeholder for GitHub webhook stuff
     log('Received webhook:\n' + JSON.stringify(req.body))
     // res.sendStatus(200)
