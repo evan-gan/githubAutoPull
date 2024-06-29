@@ -18,7 +18,8 @@ let count = 0
 async function initialize() {
     try {
         count = parseInt(await fs.readFile(countFilePath, 'utf-8'), 10)
-        log("Initialized!")
+        publicDirectory = path.join(baseDirectory, `public_dir${count}`)
+        log(`Initialized! The current public directory is: ${publicDirectory}`)
     } catch (error) {
         logError(`Failed to read count file:`, (error as Error).message)
     }
