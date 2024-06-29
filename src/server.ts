@@ -117,17 +117,20 @@ async function incrementCounter() {
     count += 1
     log("Updated pull count")
 }
-
-//Setup directory
-try {
-    const files = await fs.readdir(baseDirectory);
-    if (files.length == 0) { 
-        log("No public directory was found, downloading it now")
-        liveUpdate()
+async function setup() {
+    //Setup directory
+    try {
+        const files = await fs.readdir(baseDirectory);
+        if (files.length == 0) {
+            log("No public directory was found, downloading it now")
+            liveUpdate()
+        }
+    } catch (err) {
+        logError(`Error while looking for directory's to delete:`, err);
     }
-} catch (err) {
-    logError(`Error while looking for directory's to delete:`,err);
 }
+
+setup()
 
 app.listen(port, () => {
     initialize()
