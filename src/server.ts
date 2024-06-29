@@ -1,4 +1,5 @@
 import express from 'express'
+import rateLimit from 'express-rate-limit';
 import path from 'path'
 import fs from 'fs-extra'
 import { log, logError, logWarn } from './loger'
@@ -138,6 +139,19 @@ async function setup() {
         logError(`Error while looking for directory's to delete:`, err);
     }
 }
+
+//Rate limits! 
+const limiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 100, // limit each IP to 100 requests per windowMs
+    message: 'Too many requests from this IP, please try again later.',
+    handler: (req, res) => {
+        logWarn(`Rate limit exceeded for IP ${req.ip}`);
+        res.status(429).send('Too many requests from this IP, please try again later.');
+    }
+});
+
+app.use(limiter);
 
 app.listen(port, () => {
     initialize()
