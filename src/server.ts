@@ -63,7 +63,7 @@ app.get('*', (request, response) => {
 async function liveUpdate() {
     log("Stating a live update!")
     await incrementCounter()
-    let newPublicDirectory = path.join(baseDirectory, `public${count}`)
+    let newPublicDirectory = path.join(baseDirectory, `public_dir${count}`)
     //Test
     await downloadRepositoryContents(REPO_OWNER, REPO_NAME, newPublicDirectory)
     
