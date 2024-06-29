@@ -67,9 +67,6 @@ app.get('*', (request, response) => {
     })
 })
 
-
-
-//TODO: Finish
 async function liveUpdate() {
     log("Stating a live update!")
     await incrementCounter()
@@ -80,7 +77,7 @@ async function liveUpdate() {
     publicDirectory = newPublicDirectory
 
     await cleanUpOldFiles()
-    log(`Live update done! The new public directory is: ${publicDirectory}!`)
+    log(`Live update done! The new public directory is: ${publicDirectory}`)
 }
 
 async function cleanUpOldFiles() {
