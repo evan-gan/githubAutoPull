@@ -21,6 +21,16 @@ async function initialize() {
     } catch (error) {
         logError(`Failed to read count file:`, (error as Error).message)
     }
+
+    try {
+        const files = await fs.readdir(baseDirectory);
+        if (files.length == 0) { 
+            log("No public directory was found, downloading it now")
+            liveUpdate()
+        }
+    } catch (err) {
+        logError(`Error while looking for directory's to delete:`,err);
+    }
 }
 
 initialize();
