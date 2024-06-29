@@ -12,6 +12,18 @@ const REPO_NAME = 'evan-gan.github.io'
 const app = express()
 const port = 25565
 
+//Rate limits! 
+const limiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    limit: 3, // limit each IP to 100 requests per windowMs
+    message: 'Too many requests from this IP, please try again later.',
+    handler: (req, res) => {
+        logWarn(`Rate limit exceeded for IP ${req.ip}`);
+        res.status(429).send('Too many requests from this IP, please try again later.');
+    }
+});
+
+app.use(limiter);
 //
 const countFilePath = path.join(__dirname, 'count.txt')
 let count = 0
@@ -140,18 +152,7 @@ async function setup() {
     }
 }
 
-//Rate limits! 
-const limiter = rateLimit({
-    windowMs: 15 * 60 * 1000, // 15 minutes
-    limit: 3, // limit each IP to 100 requests per windowMs
-    // message: 'Too many requests from this IP, please try again later.',
-    handler: (req, res) => {
-        logWarn(`Rate limit exceeded for IP ${req.ip}`);
-        res.status(429).send('Too many requests from this IP, please try again later.');
-    }
-});
 
-app.use(limiter);
 
 app.listen(port, () => {
     initialize()
