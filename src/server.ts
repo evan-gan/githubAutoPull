@@ -131,7 +131,9 @@ async function setup() {
     //Setup directory
     try {
         const files = await fs.readdir(baseDirectory);
-        if (files.length == 0) {
+        if (files.length != 0) {
+            log("It seems a public directory exists already so the setup passed")
+        } else { 
             log("No public directory was found, downloading it now")
             liveUpdate()
         }
