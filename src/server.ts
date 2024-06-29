@@ -1,11 +1,10 @@
 import express from 'express'
 import path from 'path'
-// import fs from 'fs'
 import fs from 'fs-extra'
 import { log, logError, logWarn } from './loger'
 import { downloadRepositoryContents } from './githubGrab'
-import dotenv from "dotenv";
-dotenv.config();
+// import dotenv from "dotenv";
+// dotenv.config();
 
 const REPO_OWNER = 'evan-gan'
 const REPO_NAME = 'evan-gan.github.io'
@@ -26,7 +25,7 @@ async function initialize() {
 
 initialize();
 
-let baseDirectory = path.join(__dirname, '..')
+let baseDirectory = path.join(__dirname, '../publicContainer')
 let publicDirectory = path.join(baseDirectory, `public${count}`)
 
 app.use(express.json())
@@ -58,9 +57,7 @@ app.get('*', (request, response) => {
     })
 })
 
-app.listen(port, () => {
-    console.log(`Server is listening on port ${port}`)
-})
+
 
 //TODO: Finish
 async function liveUpdate() {
@@ -71,7 +68,45 @@ async function liveUpdate() {
     await downloadRepositoryContents(REPO_OWNER, REPO_NAME, newPublicDirectory)
     
     publicDirectory = newPublicDirectory
+
+    await cleanUpOldFiles()
     log("Live update done!")
+}
+
+async function cleanUpOldFiles() {
+    log("Starting to clean up old files")
+    try {
+        const files = await fs.readdir(baseDirectory);
+        for (const file of files) {
+            const filePath = path.join(baseDirectory, file);
+            if (filePath != publicDirectory) {
+                log(`Deleting old public directory: ${file}`)
+                await deleteDirectory(filePath);
+            } 
+        }
+    } catch (err) {
+        logError(`Error while looking for directory's to delete:`,err);
+    }
+    log("Done cleaning up old files!")
+}
+
+async function deleteDirectory(directoryPath: string) {
+    try {
+        const files = await fs.readdir(directoryPath);
+        for (const file of files) {
+            const filePath = path.join(directoryPath, file);
+            const stat = await fs.stat(filePath);
+            if (stat.isDirectory()) {
+                await deleteDirectory(filePath);
+            } else {
+                await fs.unlink(filePath);
+            }
+        }
+        await fs.rmdir(directoryPath);
+        log(`Deleted directory: ${directoryPath}`);
+    } catch (err) {
+        logError(`Error while deleting directory:`,err);
+    }
 }
 
 // import { promises as fs } from 'fs';
@@ -82,3 +117,8 @@ async function incrementCounter() {
     count += 1
     log("Updated pull count")
 }
+
+app.listen(port, () => {
+    initialize()
+    console.log(`Server is listening on port ${port}`)
+})
