@@ -21,16 +21,6 @@ async function initialize() {
     } catch (error) {
         logError(`Failed to read count file:`, (error as Error).message)
     }
-
-    try {
-        const files = await fs.readdir(baseDirectory);
-        if (files.length == 0) { 
-            log("No public directory was found, downloading it now")
-            liveUpdate()
-        }
-    } catch (err) {
-        logError(`Error while looking for directory's to delete:`,err);
-    }
 }
 
 initialize();
@@ -126,6 +116,17 @@ async function incrementCounter() {
     await fs.writeFile(countFilePath, (number + 1).toString())
     count += 1
     log("Updated pull count")
+}
+
+//Setup directory
+try {
+    const files = await fs.readdir(baseDirectory);
+    if (files.length == 0) { 
+        log("No public directory was found, downloading it now")
+        liveUpdate()
+    }
+} catch (err) {
+    logError(`Error while looking for directory's to delete:`,err);
 }
 
 app.listen(port, () => {
