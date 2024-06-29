@@ -26,7 +26,7 @@ async function initialize() {
 initialize();
 
 let baseDirectory = path.join(__dirname, '../publicContainer')
-let publicDirectory = path.join(baseDirectory, `public${count}`)
+let publicDirectory = path.join(baseDirectory, `public_dir${count}`)
 
 app.use(express.json())
 

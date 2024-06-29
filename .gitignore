@@ -4,4 +4,4 @@ log.txt
 fileTransfer.txt
 #Ignore pulled files:
 github-repo*/
-public*/
+public_dir*/
