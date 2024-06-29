@@ -18,12 +18,11 @@ let count = 0
 async function initialize() {
     try {
         count = parseInt(await fs.readFile(countFilePath, 'utf-8'), 10)
+        log("Initialized!")
     } catch (error) {
         logError(`Failed to read count file:`, (error as Error).message)
     }
 }
-
-initialize();
 
 let baseDirectory = path.join(__dirname, '../publicContainer')
 let publicDirectory = path.join(baseDirectory, `public_dir${count}`)
@@ -70,7 +69,7 @@ async function liveUpdate() {
     publicDirectory = newPublicDirectory
 
     await cleanUpOldFiles()
-    log("Live update done!")
+    log(`Live update done! The new public directory is: ${publicDirectory}!`)
 }
 
 async function cleanUpOldFiles() {
@@ -130,9 +129,8 @@ async function setup() {
     }
 }
 
-setup()
-
 app.listen(port, () => {
     initialize()
+    setup()
     console.log(`Server is listening on port ${port}`)
 })
