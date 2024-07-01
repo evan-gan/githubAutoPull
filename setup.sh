@@ -13,7 +13,7 @@ install_node_npm() {
     curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
 
     # Install Node.js and npm
-    sudo apt-get install -y nodejs
+    sudo apt install -y nodejs
 
     echo "Node.js and npm have been installed."
 }
@@ -21,7 +21,7 @@ install_node_npm() {
 # Function to install screen
 install_screen() {
     echo "Installing screen..."
-    sudo apt-get install -y screen
+    sudo apt install -y screen
     echo "screen has been installed."
 }
 
