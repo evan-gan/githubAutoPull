@@ -49,7 +49,8 @@ async function initialize() {
     if (!fs.existsSync(baseDirectory)) {
         try {
             await fs.ensureDir(baseDirectory);
-            log(`Base directory ${baseDirectory} did not exist and has been created.`);
+            await liveUpdate()
+            log(`Base directory ${baseDirectory} did not exist and has been created & updated.`);
         } catch (error) {
             logError(`Failed to ensure base directory ${baseDirectory}:`, (error as Error).message);
         }
