@@ -21,7 +21,13 @@ install_node_npm() {
 # Function to install screen
 install_screen() {
     echo "Installing screen..."
+    
+    # Enable EPEL repository
+    sudo yum install -y epel-release
+    
+    # Install screen
     sudo yum install -y screen
+    
     echo "screen has been installed."
 }
 
