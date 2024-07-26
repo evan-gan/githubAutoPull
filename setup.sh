@@ -9,11 +9,11 @@ command_exists() {
 install_node_npm() {
     echo "Installing Node.js and npm..."
     
-    # Use curl to fetch the Node.js setup script and execute it
-    curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+    # Add NodeSource repository for Node.js
+    curl -fsSL https://rpm.nodesource.com/setup_18.x | sudo bash -
 
     # Install Node.js and npm
-    sudo apt install -y nodejs
+    sudo yum install -y nodejs
 
     echo "Node.js and npm have been installed."
 }
@@ -21,7 +21,7 @@ install_node_npm() {
 # Function to install screen
 install_screen() {
     echo "Installing screen..."
-    sudo apt install -y screen
+    sudo yum install -y screen
     echo "screen has been installed."
 }
 
@@ -61,5 +61,5 @@ echo "Installing project dependencies..."
 npm install
 echo "Setup is complete."
 
-#Get started message:
-echo -e "TODO: Add geting started message, for now just refrence the readme"
+# Get started message:
+echo -e "TODO: Add getting started message, for now just reference the readme"
