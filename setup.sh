@@ -18,17 +18,17 @@ install_node_npm() {
     echo "Node.js and npm have been installed."
 }
 
-# Function to install screen
-install_screen() {
-    echo "Installing screen..."
+# Function to install tmux
+install_tmux() {
+    echo "Installing tmux..."
     
     # Enable EPEL repository
     sudo yum install -y epel-release
     
-    # Install screen
-    sudo yum install -y screen
+    # Install tmux
+    sudo yum install -y tmux
     
-    echo "screen has been installed."
+    echo "tmux has been installed."
 }
 
 # Check if Node.js is installed
@@ -47,12 +47,12 @@ else
     install_node_npm
 fi
 
-# Check if screen is installed
-if command_exists screen; then
-    echo "screen is already installed. Version: $(screen -v)"
+# Check if tmux is installed
+if command_exists tmux; then
+    echo "tmux is already installed. Version: $(tmux -V)"
 else
-    echo "screen is not installed."
-    install_screen
+    echo "tmux is not installed."
+    install_tmux
 fi
 
 # Make other .sh files executable
