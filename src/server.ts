@@ -4,13 +4,14 @@ import path from 'path'
 import fs from 'fs-extra'
 import { log, logError, logWarn } from './loger'
 import { downloadRepositoryContents } from './githubGrab'
+import { REPO_NAME, REPO_OWNER, port} from './config'
 // import dotenv from "dotenv";
 // dotenv.config();
 
-const REPO_OWNER = 'evan-gan'
-const REPO_NAME = 'evan-gan.github.io'
+// const REPO_OWNER = 'evan-gan'
+// const REPO_NAME = 'evan-gan.github.io'
 const app = express()
-const port = 25565
+// const port = 25565
 
 //Rate limits! 
 const limiter = rateLimit({
