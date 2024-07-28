@@ -39,13 +39,13 @@ create_config_ts() {
     read -p "Enter port you want the server to run on (ex. 25565): " port
 
     # Write user input to config.ts
-    cat <<EOL > src/config.ts
+    cat <<EOL > config.ts
 export const REPO_OWNER = '$repo_owner';
 export const REPO_NAME = '$repo_name';
 export const port = $port;
 EOL
 
-    echo "config.ts has been created with the provided user input."
+    # echo "config.ts has been created with the provided user input."
 
     # Return the port for further use
     echo "$port"
