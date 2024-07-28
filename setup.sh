@@ -103,11 +103,13 @@ server_ip=$(get_server_ip)
 
 # Construct and display the getting started message
 # Construct and display the getting started message
-echo -e "Great! Now that you have everything set up on the backend, you are almost there!"
+echo -e "\nGreat! Now that you have everything set up on the backend, you are almost there!"
 echo -e "There are a few extra things you need to set up on GitHub."
-echo -e "First, navigate to your repository."
-echo -e "Second, click 'Settings', then 'Webhooks' on the right-hand menu, then click 'Add webhook'."
-echo -e "Now paste this URL:\nhttp://$server_ip:$port/webhook\ninto the 'Payload URL' field and press 'Add webhook'."
-echo -e "That's it! You should be all set up now."
-echo -e "To start the server, navigate to this directory and run ./start_server.sh."
+echo -e "\nFirst, navigate to your repository."
+echo -e "\nSecond, click 'Settings', then 'Webhooks' on the right-hand menu, then click 'Add webhook'."
+echo -e "\nNow paste this URL:"
+echo -e "http://$server_ip:$port/webhook"
+echo -e "into the 'Payload URL' field and press 'Add webhook'."
+echo -e "\nThat's it! You should be all set up now."
+echo -e "\nTo start the server, navigate to this directory and run ./start_server.sh."
 echo -e "To stop the server, navigate to this directory and run ./stop_server.sh."
