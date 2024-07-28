@@ -57,7 +57,6 @@ async function initialize() {
         }
     } else {
         try {
-            await fs.emptyDir(baseDirectory);
             await liveUpdate()
             log(`Base directory ${baseDirectory} existed and has been cleared.`);
         } catch (error) {
@@ -75,7 +74,7 @@ app.post('/webhook', updateLimiter, (req, res) => {
     // Placeholder for GitHub webhook stuff
     log('Received webhook:\n' + JSON.stringify(req.body))
     // res.sendStatus(200)
-    res.status(200).send("Receved trigger!")
+    res.status(200).send("Receved trigger, starting update!")
     liveUpdate()
 })
 
@@ -85,13 +84,13 @@ app.get('*', (request, response) => {
 
     if (!normalizedPath.startsWith(publicDirectory)) {
         logWarn(`A user attempted to access forbidden files. They tried to access "${request.path}" which was normalised to "${normalizedPath}"`)
-        return response.status(403).send('Good try! The files you are trying to access are forbidden!')
+        return response.status(403).send('Good try! The files you are trying to access are forbidden! How the heck did you even get here? Shoot me a DM!')
     }
 
     fs.stat(normalizedPath, (err, stats) => {
         if (err || !stats.isFile()) {
             logWarn(`A user attempted to access files that do not exist. They tried to access "${request.path}" which was normalised to "${normalizedPath}"`)
-            return response.status(404).send('Not Found')
+            return response.status(404).sendFile(path.join(__dirname, '404.html'));
         }
         log(`A user accessed ${request.path}" which was normalised to "${normalizedPath}"`)
         response.sendFile(normalizedPath)
