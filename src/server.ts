@@ -55,6 +55,14 @@ async function initialize() {
         } catch (error) {
             logError(`Failed to ensure base directory ${baseDirectory}:`, (error as Error).message);
         }
+    } else {
+        try {
+            await fs.emptyDir(baseDirectory);
+            await liveUpdate()
+            log(`Base directory ${baseDirectory} existed and has been cleared.`);
+        } catch (error) {
+            logError(`Failed to clear base directory ${baseDirectory}:`, (error as Error).message);
+        }
     }
 }
 
@@ -144,9 +152,10 @@ async function deleteDirectory(directoryPath: string) {
 async function incrementCounter() {
     const number = await parseInt(await fs.readFile(countFilePath, 'utf-8'), 10)
     await fs.writeFile(countFilePath, (number + 1).toString())
-    count += 1
+    count = number + 1
     log("Updated pull count")
 }
+
 async function setup() {
     //Setup directory
     try {
