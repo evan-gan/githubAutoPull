@@ -9,6 +9,12 @@ cd "$SCRIPT_DIR/src"
 # Prompt the user to enter a custom name for the tmux session
 read -p "Enter a name for the tmux session: " session_name
 
+# Check if a tmux session with the entered name already exists
+if tmux has-session -t "$session_name" 2>/dev/null; then
+    echo "A tmux session with the name '$session_name' already exists. Please choose a different name."
+    exit 1
+fi
+
 # Define the command to start the Node.js server
 start_command='npm start'
 
