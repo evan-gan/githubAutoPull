@@ -39,7 +39,7 @@ create_config_ts() {
     read -p "Enter port: " port
 
     # Write user input to config.ts
-    cat <<EOL > src/config.ts
+    cat <<EOL > config.ts
 export const REPO_OWNER = '$repo_owner';
 export const REPO_NAME = '$repo_name';
 export const port = $port;
