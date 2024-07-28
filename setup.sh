@@ -36,10 +36,10 @@ create_config_ts() {
     # Prompt user for REPO_OWNER, REPO_NAME, and port
     read -p "Enter the github username that owns the repo (ex: evan-gan): " repo_owner
     read -p "Enter the name of the repo (ex. evan-gan.github.io): " repo_name
-    read -p "Enter port you want the server to run on: " port
+    read -p "Enter port you want the server to run on (ex. 25565): " port
 
     # Write user input to config.ts
-    cat <<EOL > config.ts
+    cat <<EOL > src/config.ts
 export const REPO_OWNER = '$repo_owner';
 export const REPO_NAME = '$repo_name';
 export const port = $port;
@@ -47,14 +47,14 @@ EOL
 
     echo "config.ts has been created with the provided user input."
 
-    # Return the port for further use, but suppress the output
-    echo "$port" > /dev/null
+    # Return the port for further use
+    echo "$port"
 }
 
 # Function to get the current server's IP address
 get_server_ip() {
     ip=$(hostname -I | awk '{print $1}')
-    echo "$ip" > /dev/null
+    echo "$ip"
 }
 
 # Check if Node.js is installed
@@ -88,8 +88,6 @@ chmod +x stop_server.sh
 # Change to the Node.js project directory
 cd src
 
-
-
 # Install project dependencies
 echo "Installing project dependencies..."
 npm install
@@ -101,7 +99,6 @@ port=$(create_config_ts)
 # Get the server IP address
 server_ip=$(get_server_ip)
 
-# Construct and display the getting started message
 # Construct and display the getting started message
 echo -e "\nGreat! Now that you have everything set up on the backend, you are almost there!"
 echo -e "There are a few extra things you need to set up on GitHub."
