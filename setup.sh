@@ -34,9 +34,9 @@ install_tmux() {
 # Function to prompt for user input and create config.ts
 create_config_ts() {
     # Prompt user for REPO_OWNER, REPO_NAME, and port
-    read -p "Enter REPO_OWNER: " repo_owner
-    read -p "Enter REPO_NAME: " repo_name
-    read -p "Enter port: " port
+    read -p "Enter the github username that owns the repo (ex: evan-gan): " repo_owner
+    read -p "Enter the name of the repo (ex. evan-gan.github.io): " repo_name
+    read -p "Enter port you want the server to run on: " port
 
     # Write user input to config.ts
     cat <<EOL > config.ts
@@ -112,4 +112,4 @@ echo -e "http://$server_ip:$port/webhook"
 echo -e "into the 'Payload URL' field and press 'Add webhook'."
 echo -e "\nThat's it! You should be all set up now."
 echo -e "\nTo start the server, navigate to this directory and run ./start_server.sh."
-echo -e "To stop the server, navigate to this directory and run ./stop_server.sh."
+echo -e "To stop the server, navigate to this directory and run ./stop_server.sh.\n"
