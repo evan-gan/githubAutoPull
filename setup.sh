@@ -34,27 +34,33 @@ install_tmux() {
 # Function to prompt for user input and create config.ts
 create_config_ts() {
     # Prompt user for REPO_OWNER, REPO_NAME, and port
-    read -p "Enter the github username that owns the repo (ex: evan-gan): " repo_owner
+    read -p "Enter the GitHub username that owns the repo (ex: evan-gan): " repo_owner
     read -p "Enter the name of the repo (ex. evan-gan.github.io): " repo_name
-    read -p "Enter port you want the server to run on (ex. 25565): " port
+    read -p "Enter the port you want the server to run on (ex. 25565): " port
 
     # Write user input to config.ts
     SCRIPT_DIR=$(dirname "$0")
-    cat <<EOL > "$SCRIPT_DIR/src/config.ts"
-export const REPO_OWNER = '$repo_owner';
+    CONFIG_FILE="$SCRIPT_DIR/src/config.ts"
+    if ! echo "export const REPO_OWNER = '$repo_owner';
 export const REPO_NAME = '$repo_name';
-export const port = $port;
-EOL
+export const port = $port;" > "$CONFIG_FILE"; then
+        echo "Error: Failed to write to $CONFIG_FILE"
+        exit 1
+    fi
 
-    # echo "config.ts has been created with the provided user input."
+    echo "config.ts has been created with the provided user input."
 
     # Return the port for further use
     echo "$port"
 }
 
-# Function to get the current server's IP address
+# Function to get the current server's public IP address
 get_server_ip() {
-    ip=$(hostname -I | awk '{print $1}')
+    ip=$(curl -s https://api.ipify.org)
+    if [ -z "$ip" ]; then
+        echo "Error: Unable to fetch the server's IP address"
+        exit 1
+    fi
     echo "$ip"
 }
 
