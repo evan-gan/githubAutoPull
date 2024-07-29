@@ -41,14 +41,20 @@ create_config_ts() {
     # Write user input to config.ts
     SCRIPT_DIR=$(dirname "$0")
     CONFIG_FILE="$SCRIPT_DIR/src/config.ts"
-    if ! echo "export const REPO_OWNER = '$repo_owner';
+
+    # Ensure the src directory exists
+    mkdir -p "$SCRIPT_DIR/src"
+
+    cat <<EOL > "$CONFIG_FILE"
+export const REPO_OWNER = '$repo_owner';
 export const REPO_NAME = '$repo_name';
-export const port = $port;" > "$CONFIG_FILE"; then
+export const port = $port;
+EOL
+
+    if [ $? -ne 0 ]; then
         echo "Error: Failed to write to $CONFIG_FILE"
         exit 1
     fi
-
-    echo "config.ts has been created with the provided user input."
 
     # Return the port for further use
     echo "$port"
