@@ -1,4 +1,7 @@
 #This could get large and is unnessary
 log.txt
+#Should not be public:
+fileTransfer.txt
 #Ignore pulled files:
 github-repo*/
+public_dir*/
