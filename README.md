@@ -1,5 +1,5 @@
 # How to set this up in two simple steps:
-First, clone this repo to the server you want to run it on.
+First, clone this repo to the server you want to run it on. (run `git clone https://github.com/evan-gan/githubAutoPull.git` once connected to your server)
 
 Second, run `chmod +x ./setup.sh ; ./setup.sh`
 
