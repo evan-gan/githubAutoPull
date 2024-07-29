@@ -40,10 +40,7 @@ create_config_ts() {
 
     # Write user input to config.ts
     SCRIPT_DIR=$(dirname "$0")
-    CONFIG_FILE="$SCRIPT_DIR/src/config.ts"
-
-    # Ensure the src directory exists
-    mkdir -p "$SCRIPT_DIR/src"
+    CONFIG_FILE="$SCRIPT_DIR/config.ts"
 
     cat <<EOL > "$CONFIG_FILE"
 export const REPO_OWNER = '$repo_owner';
